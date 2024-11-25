@@ -7,9 +7,3 @@ services:
     container_name: app
     ports:
       - "80:8000"
-    command: 
-      [
-        "fastapi", 
-        "run", 
-        "main.py"
-      ]

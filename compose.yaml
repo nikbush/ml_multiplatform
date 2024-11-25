@@ -1,0 +1,9 @@
+name: app
+
+services:
+  app:
+    build: .
+    image: ml
+    container_name: app
+    ports:
+      - "80:8000"

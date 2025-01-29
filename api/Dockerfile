@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY main.py .
+COPY src .
 COPY initdb.sql .
 
-CMD [ "fastapi", "run", "main.py" ]
+CMD [ "fastapi", "run", "src/main.py", "--reload" ]

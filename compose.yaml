@@ -4,6 +4,7 @@ networks:
   my_custom_network: # Define a custom network
     driver: bridge
 
+
 services:
   app:
     build: api
@@ -16,9 +17,11 @@ services:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
     ports:
-      - "80:8000"
+      - "8000:8000"
     networks:
       - my_custom_network
+    volumes:
+      - ./api/src:/app/src:ro
 
   db:
     image: postgres:17.2
@@ -33,3 +36,13 @@ services:
       - "5432:5432"
     networks:
       - my_custom_network
+  
+  web_server:
+    image: nginx:1.27.3
+    build: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - my_custom_network
+    depends_on:
+      - app

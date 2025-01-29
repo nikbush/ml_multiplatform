@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostgreSQL Data</title>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch("http://app:8000/table/list");
+                if (!response.ok) {
+                    throw new Error("Ошибка загрузки данных");
+                }
+                const data = await response.json();
+                const list = document.getElementById("data-list");
+                list.innerHTML = ""; // Очистка списка перед обновлением
+                data.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item.join(", ");
+                    list.appendChild(li);
+                });
+                document.getElementById("error").textContent = "";
+            } catch (error) {
+                console.error("Ошибка:", error);
+                document.getElementById("error").textContent = "Не удалось загрузить данные!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Данные из PostgreSQL</h1>
+    <ul id="data-list">
+        <li>Загрузка...</li>
+    </ul>
+    <p id="error" style="color: red;"></p>
+    <button onclick="fetchData()">Обновить данные</button>
+</body>
+</html>

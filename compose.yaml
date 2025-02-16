@@ -6,20 +6,23 @@ networks:
 
 
 services:
-  app:
+  api:
     build: api
-    image: ml
-    container_name: app
+    image: api
     environment:
       POSTGRES_DB: test
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
+      REDIS_HOST: redis
     ports:
       - "8000:8000"
     networks:
       - my_custom_network
+    depends_on:
+      - db
+      - redis
     volumes:
       - ./api/src:/app/src:ro
 
@@ -38,11 +41,21 @@ services:
       - my_custom_network
   
   web_server:
-    image: nginx:1.27.3
-    build: ./frontend
+    image: web_server
+    build: ./web_server
     ports:
       - "80:80"
     networks:
       - my_custom_network
+    volumes:
+      - ./web_server/src:/usr/share/nginx/html/:ro
     depends_on:
-      - app
+      - api
+  
+  redis:
+    image: redis:8.0-M03-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"  # Порт для подключения к Redis
+    networks:
+      - my_custom_network

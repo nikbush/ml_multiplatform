@@ -3,6 +3,12 @@
 ### Architecture
  - [Structure](docs/STRUCTURE.md)
 
+### Create a Virtual Environment
+```bash
+python3 -m venv .env
+source .env/bin/activate
+```
+
 ### Build & run containers
 ```bash
 docker build -t myimage:latest .

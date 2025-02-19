@@ -1,5 +1,8 @@
 ## ML_MULTIPLATFORM
 
+### Architecture
+ - [Structure](docs/STRUCTURE.md)
+
 ### Build & run containers
 ```bash
 docker build -t myimage:latest .

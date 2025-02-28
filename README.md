@@ -1,5 +1,8 @@
 ## ML_MULTIPLATFORM
 
+### Architecture
+ - [Structure](docs/STRUCTURE.md)
+
 ### Create a Virtual Environment
 ```bash
 python3 -m venv .env

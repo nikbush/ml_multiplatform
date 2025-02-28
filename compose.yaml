@@ -59,3 +59,11 @@ services:
       - "6379:6379"  # Порт для подключения к Redis
     networks:
       - my_custom_network
+  
+  worker:
+    build: ./worker
+    container_name: worker
+    depends_on:
+      - redis
+    networks:
+      - my_custom_network

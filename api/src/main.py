@@ -13,7 +13,6 @@ from rq.job import Job
 from pydantic import BaseModel
 
 
-# с помощью переменных окружения убрать дублирование информации
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -31,7 +30,7 @@ app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods = ["*"], allow_headers=["*"])
 
 class Task(BaseModel):
-    sleep_time: int
+    sleep_time: int = 60
 
 @app.post("/tasks")
 async def create_task(task: Task):
@@ -41,6 +40,7 @@ async def create_task(task: Task):
     task_data = {"sleep_time": 10, "status": "queued"}
     r.hset(task_key, mapping=task_data)
     r.lpush("default", task_id)
+    return {"task_id": task_id}
 
 
 @app.get("/tasks/{task_id}")
@@ -48,5 +48,5 @@ async def get_task_status(task_id: str):
     task_key = f"task:{task_id}"
     task = r.hgetall(task_key)
     if not task:
-        raise HTTPException(status_code=404)
+        raise HTTPException(status_code=404) # type: ignore
     return task

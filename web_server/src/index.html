@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PostgreSQL Data</title>
-    <script src="script.js" defer></script>
+    <title>Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Data from PostgreSQL</h1>
-    <ul id="data-list">
-        <li>Loading...</li>
-    </ul>
-    <p id="error" style="color: red;"></p>
-    <button onclick="fetchData()">Update data</button>
+<body class="bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen flex items-center justify-center">
+    <div class="max-w-2xl w-full bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center text-gray-700 mb-4">Task Manager</h1>
+
+        <!-- Input & Button -->
+        <div class="flex items-center gap-2">
+            <input type="number" id="sleepTime" min="1" value="10"
+                class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                placeholder="Enter sleep time (seconds)">
+            <button id="createTaskBtn" 
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                Create Task
+            </button>
+        </div>
+
+        <!-- Table -->
+        <div class="mt-4 overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300 shadow-md rounded-lg">
+                <thead>
+                    <tr class="bg-blue-500 text-white">
+                        <th class="border border-gray-300 px-4 py-2">Task ID</th>
+                        <th class="border border-gray-300 px-4 py-2">Sleep Time</th>
+                        <th class="border border-gray-300 px-4 py-2 min-w-[120px] text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="taskTableBody" class="text-center bg-gray-100">
+                    <!-- Tasks will be added here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>  <!-- Load external JS file -->
 </body>
 </html>

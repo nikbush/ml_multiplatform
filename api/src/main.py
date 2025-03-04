@@ -1,14 +1,11 @@
 import os
 import uuid
-import json
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import psycopg
 
 import redis
 from rq import Queue
-from rq.job import Job
 
 from pydantic import BaseModel
 
@@ -37,7 +34,7 @@ async def create_task(task: Task):
     task_id = str(uuid.uuid4())
     task_key = f"task:{task_id}"
     print(f"Job {task_id} added to queue")
-    task_data = {"sleep_time": 10, "status": "queued"}
+    task_data = {"sleep_time": task.sleep_time, "status": "Queued"}
     r.hset(task_key, mapping=task_data)
     r.lpush("default", task_id)
     return {"task_id": task_id}
